@@ -11,6 +11,16 @@
   --font-sans: "Inter", "Noto Sans Khmer", sans-serif;
 }
 
+/*
+ * Text-emphasis scale — use these three opacity steps only, on either
+ * brand-charcoal (light surfaces) or white (dark surfaces):
+ *   /80  strong   — supporting body copy, readable secondary text
+ *   /55  muted    — bilingual translation lines, captions, list labels
+ *   /40  faint    — tertiary text: fine print, legal, footer detail
+ * Keeping to these three avoids the text-*/45, /50, /60, /70 drift that
+ * crept in before this was written down.
+ */
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
@@ -18,6 +28,64 @@ html {
 
 body {
   font-family: var(--font-khmer);
+}
+
+/*
+ * Motion system.
+ * - [data-reveal] fades/slides content in as it scrolls into view (see the
+ *   IntersectionObserver in BaseLayout.astro). Gated on html.js so content
+ *   stays fully visible if JavaScript fails to load, and on
+ *   prefers-reduced-motion so it never runs for users who opt out.
+ * - .animate-fade-up drives the hero's on-load stagger via animation-delay.
+ * - .hero-ken-burns is the slow background zoom behind the hero image.
+ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+.hero-ken-burns {
+  animation: hero-zoom 20s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ken-burns {
+    animation: none;
+  }
 }
 
 @utility material-symbols-outlined {

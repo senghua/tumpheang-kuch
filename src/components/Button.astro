@@ -25,7 +25,7 @@ const key = `${dark ? "dark" : "light"}-${variant}` as keyof typeof styles;
   target={target}
   rel={rel}
   class:list={[
-    "inline-block px-8 py-3 text-center font-semibold transition-colors",
+    "inline-block px-8 py-3 text-center font-semibold transition-all duration-200 active:scale-95",
     styles[key],
     className,
   ]}

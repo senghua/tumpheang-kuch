@@ -52,7 +52,10 @@ const links = [
     </div>
   </div>
 
-  <nav id="mobile-menu" class="fixed inset-0 z-50 hidden bg-brand-charcoal text-white min-[1120px]:hidden">
+  <nav
+    id="mobile-menu"
+    class="invisible fixed inset-0 z-50 scale-95 bg-brand-charcoal text-white opacity-0 transition-all duration-300 ease-out pointer-events-none min-[1120px]:hidden"
+  >
     <ul class="flex h-full flex-col items-center justify-center gap-6 text-2xl font-semibold">
       {
         links.map((link) => (
@@ -81,7 +84,10 @@ const links = [
   const navIcon = document.getElementById("nav-icon");
 
   const setOpen = (isOpen: boolean) => {
-    menu?.classList.toggle("hidden", !isOpen);
+    menu?.classList.toggle("invisible", !isOpen);
+    menu?.classList.toggle("opacity-0", !isOpen);
+    menu?.classList.toggle("scale-95", !isOpen);
+    menu?.classList.toggle("pointer-events-none", !isOpen);
     toggle?.setAttribute("aria-expanded", String(isOpen));
     if (navIcon) navIcon.textContent = isOpen ? "close" : "menu";
     toggle?.classList.toggle("text-white", isOpen);
@@ -89,7 +95,7 @@ const links = [
   };
 
   toggle?.addEventListener("click", () => {
-    setOpen(menu?.classList.contains("hidden") === true);
+    setOpen(menu?.classList.contains("invisible") === true);
   });
 
   menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));

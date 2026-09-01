@@ -42,7 +42,7 @@ const hasDetails = Astro.slots.has("default");
       densities={[1, 1.5, 2]}
       quality={90}
       class:list={[
-        "h-full w-full object-cover transition-all duration-500",
+        "h-full w-full object-cover transition-all duration-500 group-hover:scale-105",
         grayscale && "grayscale group-hover:grayscale-0",
       ]}
     />
@@ -51,16 +51,16 @@ const hasDetails = Astro.slots.has("default");
   {
     title && (
       <div class="mt-4">
-        <p class:list={["font-khmer font-bold text-brand-charcoal", size === "large" ? "text-xl" : "text-sm"]}>
+        <p class:list={["font-khmer leading-snug font-bold text-brand-charcoal", size === "large" ? "text-xl" : "text-sm"]}>
           {title}
         </p>
         {subtitle && (
-          <p class:list={["text-brand-charcoal/60", size === "large" ? "mt-1 text-sm font-semibold" : "text-xs"]}>
+          <p class:list={["text-brand-charcoal/55", size === "large" ? "mt-1 text-sm font-semibold" : "text-xs"]}>
             {typeof subtitle === "string" ? subtitle : <Bilingual km={subtitle.km} en={subtitle.en} />}
           </p>
         )}
         {hasDetails && detailsLabel && (
-          <details class="mt-3 text-sm text-brand-charcoal/70">
+          <details class="mt-3 text-sm text-brand-charcoal/80">
             <summary class="cursor-pointer list-none font-semibold text-brand-charcoal">
               <Bilingual km={detailsLabel.km} en={detailsLabel.en} />
             </summary>

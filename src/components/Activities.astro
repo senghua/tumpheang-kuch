@@ -23,16 +23,16 @@ const locations = [tt("activities.location1"), tt("activities.location2"), tt("a
 <section id="activities" class="scroll-mt-20 bg-white py-20 sm:py-28">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
-      <div>
+      <div data-reveal>
         <Eyebrow km={eyebrow.km} en={eyebrow.en} class="lg:justify-start" />
-        <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+        <h2 class="mt-3 font-khmer text-3xl leading-snug font-bold tracking-tight text-brand-charcoal sm:text-4xl">
           {title.km}
         </h2>
-        <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">{title.en}</p>
+        <p class="mt-2 text-sm font-medium text-brand-charcoal/55 sm:text-base">{title.en}</p>
       </div>
-      <div class="text-center">
-        <p class="text-4xl font-extrabold tracking-tight text-brand-charcoal">10–15</p>
-        <p class="mt-1 text-xs font-medium text-brand-charcoal/60">
+      <div class="text-center" data-reveal style="transition-delay: 100ms">
+        <p class="text-4xl font-extrabold tracking-tight text-brand-gold">10–15</p>
+        <p class="mt-1 text-xs font-medium text-brand-charcoal/55">
           <Bilingual km={statLabel.km} en={statLabel.en} />
         </p>
       </div>
@@ -40,8 +40,12 @@ const locations = [tt("activities.location1"), tt("activities.location2"), tt("a
 
     <div class="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start">
       {
-        locations.map((loc) => (
-          <span class="rounded-full bg-black px-4 py-1.5 text-sm font-medium text-white">
+        locations.map((loc, i) => (
+          <span
+            class="rounded-full bg-black px-4 py-1.5 text-sm font-medium text-white transition-transform hover:scale-105"
+            data-reveal
+            style={`transition-delay: ${i * 80}ms`}
+          >
             <Bilingual km={loc.km} en={loc.en} enClass="opacity-60" />
           </span>
         ))
@@ -51,7 +55,7 @@ const locations = [tt("activities.location1"), tt("activities.location2"), tt("a
     <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
       {
         activityPhotos.map((photo, i) => (
-          <div class:list={[i === 0 && "col-span-2 row-span-2"]}>
+          <div class:list={[i === 0 && "col-span-2 row-span-2"]} data-reveal style={`transition-delay: ${Math.min(i, 5) * 80}ms`}>
             <GridModule
               image={photo}
               imageAlt="Tum Pheang Kuch activity — training seminar with students"

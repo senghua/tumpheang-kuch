@@ -41,32 +41,34 @@ const speakers = Object.entries(modules)
 
 <section id="speakers" class="scroll-mt-20 bg-white py-20 sm:py-28">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
       <div class="flex justify-center">
         <Eyebrow km={eyebrow.km} en={eyebrow.en} />
       </div>
-      <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+      <h2 class="mt-3 font-khmer text-3xl leading-snug font-bold tracking-tight text-brand-charcoal sm:text-4xl">
         {title.km}
       </h2>
-      <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">{title.en}</p>
-      <p class="mt-5 text-sm leading-relaxed text-brand-charcoal/70">
+      <p class="mt-2 text-sm font-medium text-brand-charcoal/55 sm:text-base">{title.en}</p>
+      <p class="mt-5 text-sm leading-relaxed text-brand-charcoal/80">
         {description.km}
       </p>
-      <p class="mt-2 text-sm leading-relaxed text-brand-charcoal/45">
+      <p class="mt-2 text-sm leading-relaxed text-brand-charcoal/55">
         {description.en}
       </p>
     </div>
 
     <div class="mt-14 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
       {
-        speakers.map((speaker) => (
-          <GridModule
-            image={speaker.photo}
-            imageAlt={speaker.name}
-            title={speaker.name}
-            size="standard"
-            aspect="square"
-          />
+        speakers.map((speaker, i) => (
+          <div data-reveal style={`transition-delay: ${(i % 5) * 70}ms`}>
+            <GridModule
+              image={speaker.photo}
+              imageAlt={speaker.name}
+              title={speaker.name}
+              size="standard"
+              aspect="square"
+            />
+          </div>
         ))
       }
     </div>

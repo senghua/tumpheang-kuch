@@ -39,7 +39,7 @@ const year = new Date().getFullYear();
     <div class="grid gap-10 sm:grid-cols-3">
       <div>
         <Logo imgClass="h-12 w-12" />
-        <p class="mt-4 text-sm leading-relaxed text-white/60">
+        <p class="mt-4 text-sm leading-relaxed text-white/80">
           {tagline.km}
         </p>
         <p class="mt-1.5 text-xs leading-relaxed text-white/40">
@@ -51,7 +51,7 @@ const year = new Date().getFullYear();
         <p class="text-sm font-semibold text-white/80">
           <Bilingual km={quickLinksLabel.km} en={quickLinksLabel.en} />
         </p>
-        <ul class="mt-4 space-y-2 text-sm text-white/60">
+        <ul class="mt-4 space-y-2 text-sm text-white/55">
           {
             quickLinks.map((link) => (
               <li>
@@ -73,7 +73,7 @@ const year = new Date().getFullYear();
             socials.map((social) => (
               <a
                 href={social.href}
-                class="rounded-full border border-white/20 px-4 py-1.5 text-xs font-medium text-white/70 transition-colors hover:border-white hover:bg-white hover:text-brand-charcoal"
+                class="rounded-full border border-white/20 px-4 py-1.5 text-xs font-medium text-white/80 transition-colors hover:border-white hover:bg-white hover:text-brand-charcoal"
               >
                 {social.name}
               </a>
