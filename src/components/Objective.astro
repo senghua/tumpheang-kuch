@@ -1,0 +1,48 @@
+---
+import Eyebrow from "./Eyebrow.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const title = tt("objective.title");
+const description = tt("objective.description");
+const eyebrow = tt("objective.eyebrow");
+
+const cards = [
+  { title: tt("objective.card1.title"), subtitle: tt("objective.card1.subtitle").en, span: true },
+  { title: tt("objective.card2.title"), subtitle: tt("objective.card2.subtitle").en, span: false },
+  { title: tt("objective.card3.title"), subtitle: tt("objective.card3.subtitle").en, span: false },
+];
+---
+
+<section id="objective" class="scroll-mt-20 bg-brand-charcoal py-20 text-white sm:py-28">
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 md:grid-cols-2 md:items-center lg:px-8">
+    <div>
+      <Eyebrow km={eyebrow.km} en={eyebrow.en} dark />
+      <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight sm:text-4xl">
+        {title.km}
+      </h2>
+      <p class="mt-2 text-sm font-medium text-white/50 sm:text-base">
+        {title.en}
+      </p>
+      <p class="mt-6 text-base leading-relaxed text-white/80 sm:text-lg">
+        {description.km}
+      </p>
+      <p class="mt-3 text-sm leading-relaxed text-white/50 sm:text-base">
+        {description.en}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 sm:gap-6">
+      {
+        cards.map((card) => (
+          <div class:list={["border-t border-white/20 pt-4", card.span && "col-span-2"]}>
+            <p class:list={["font-khmer font-bold text-white", card.span ? "text-2xl" : "text-xl"]}>
+              {card.title.km}
+            </p>
+            <p class="mt-1 text-sm text-white/50">{card.subtitle}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

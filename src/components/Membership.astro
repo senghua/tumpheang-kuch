@@ -1,0 +1,90 @@
+---
+import Bilingual from "./Bilingual.astro";
+import Eyebrow from "./Eyebrow.astro";
+import Button from "./Button.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const title = tt("membership.title");
+const eyebrow = tt("membership.eyebrow");
+const featuredLabel = tt("membership.featured");
+const joinNow = tt("membership.joinNow");
+
+const tiers = [
+  {
+    name: "សមាជិកធម្មតា",
+    en: "Normal Member",
+    featured: false,
+    perks: [
+      tt("membership.tier1.perk1"),
+      tt("membership.tier1.perk2"),
+      tt("membership.tier1.perk3"),
+      tt("membership.tier1.perk4"),
+    ],
+  },
+  {
+    name: "សមាជិកមាស",
+    en: "Gold Member",
+    featured: true,
+    perks: [
+      tt("membership.tier2.perk1"),
+      tt("membership.tier2.perk2"),
+      tt("membership.tier2.perk3"),
+      tt("membership.tier2.perk4"),
+      tt("membership.tier2.perk5"),
+      tt("membership.tier2.perk6"),
+    ],
+  },
+];
+---
+
+<section id="membership" class="scroll-mt-20 bg-neutral-50 py-20 sm:py-28">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <div class="flex justify-center">
+        <Eyebrow km={eyebrow.km} en={eyebrow.en} />
+      </div>
+      <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+        {title.km}
+      </h2>
+      <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">
+        {title.en}
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-8 sm:grid-cols-2">
+      {
+        tiers.map((tier, i) => (
+          <div
+            class:list={[
+              "relative flex flex-col border p-8 text-brand-charcoal",
+              tier.featured ? "border-2 border-brand-charcoal" : "border-black/10",
+            ]}
+          >
+            {tier.featured && (
+              <span class="absolute -top-3 right-8 border border-brand-charcoal bg-white px-3 py-1 text-xs font-bold text-brand-charcoal">
+                <Bilingual km={featuredLabel.km} en={featuredLabel.en} enClass="opacity-70" />
+              </span>
+            )}
+            <p class="font-mono text-sm text-brand-charcoal/40">0{i + 1}</p>
+            <h3 class:list={["mt-2 font-khmer font-bold", tier.featured ? "text-3xl" : "text-2xl"]}>{tier.name}</h3>
+            <p class="text-sm text-brand-charcoal/50">{tier.en}</p>
+            <ul class="mt-6 flex-1 space-y-3 text-sm">
+              {tier.perks.map((perk) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-0.5 font-bold text-brand-charcoal">✓</span>
+                  <span class="text-brand-charcoal/80">
+                    <Bilingual km={perk.km} en={perk.en} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <Button href="#contact" variant={tier.featured ? "solid" : "outline"} class="mt-8 block">
+              <Bilingual km={joinNow.km} en={joinNow.en} enClass="opacity-80" />
+            </Button>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

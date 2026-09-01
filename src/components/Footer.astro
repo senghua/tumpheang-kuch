@@ -1,0 +1,93 @@
+---
+// TODO: add contact details (phone/email/address) and real social links once
+// provided by the client — none were present in the source profile deck.
+import Logo from "./Logo.astro";
+import Bilingual from "./Bilingual.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const tagline = tt("footer.tagline");
+const quickLinksLabel = tt("footer.quickLinks");
+const followUsLabel = tt("footer.followUs");
+const contactSoon = tt("footer.contactSoon");
+const rights = tt("footer.rights");
+
+const quickLinks = [
+  { href: "#about", ...tt("nav.about") },
+  { href: "#vision", ...tt("nav.vision") },
+  { href: "#leadership", ...tt("nav.leadership") },
+  { href: "#membership", ...tt("nav.membership") },
+  { href: "#activities", ...tt("nav.activities") },
+  { href: "#partners", ...tt("nav.partners") },
+];
+
+const socials = [
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61553775306912",
+  },
+  { name: "Telegram", href: "#" },
+  { name: "TikTok", href: "#" },
+  { name: "YouTube", href: "#" },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-brand-charcoal text-white">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+    <div class="grid gap-10 sm:grid-cols-3">
+      <div>
+        <Logo imgClass="h-12 w-12" />
+        <p class="mt-4 text-sm leading-relaxed text-white/60">
+          {tagline.km}
+        </p>
+        <p class="mt-1.5 text-xs leading-relaxed text-white/40">
+          {tagline.en}
+        </p>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold text-white/80">
+          <Bilingual km={quickLinksLabel.km} en={quickLinksLabel.en} />
+        </p>
+        <ul class="mt-4 space-y-2 text-sm text-white/60">
+          {
+            quickLinks.map((link) => (
+              <li>
+                <a href={link.href} class="underline-offset-4 transition-colors hover:underline hover:decoration-brand-red">
+                  <Bilingual km={link.km} en={link.en} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold text-white/80">
+          <Bilingual km={followUsLabel.km} en={followUsLabel.en} />
+        </p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          {
+            socials.map((social) => (
+              <a
+                href={social.href}
+                class="rounded-full border border-white/20 px-4 py-1.5 text-xs font-medium text-white/70 transition-colors hover:border-white hover:bg-white hover:text-brand-charcoal"
+              >
+                {social.name}
+              </a>
+            ))
+          }
+        </div>
+        <p class="mt-4 text-xs text-white/40">
+          <Bilingual km={contactSoon.km} en={contactSoon.en} />
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 border-t border-white/10 pt-6 text-center text-xs text-white/40">
+      © {year} Tum Pheang Kuch. <Bilingual km={rights.km} en={rights.en} />
+    </div>
+  </div>
+</footer>

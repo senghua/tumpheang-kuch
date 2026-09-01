@@ -1,0 +1,66 @@
+---
+import Bilingual from "./Bilingual.astro";
+import Eyebrow from "./Eyebrow.astro";
+import GridModule from "./GridModule.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const title = tt("activities.title");
+const eyebrow = tt("activities.eyebrow");
+const statLabel = tt("activities.statLabel");
+
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/activities/*.{jpg,jpeg,png,webp}",
+  { eager: true }
+);
+const activityPhotos = Object.entries(modules)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([, mod]) => mod.default);
+
+const locations = [tt("activities.location1"), tt("activities.location2"), tt("activities.location3")];
+---
+
+<section id="activities" class="scroll-mt-20 bg-white py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center gap-6 text-center lg:flex-row lg:justify-between lg:text-left">
+      <div>
+        <Eyebrow km={eyebrow.km} en={eyebrow.en} class="lg:justify-start" />
+        <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+          {title.km}
+        </h2>
+        <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">{title.en}</p>
+      </div>
+      <div class="text-center">
+        <p class="text-4xl font-extrabold tracking-tight text-brand-charcoal">10–15</p>
+        <p class="mt-1 text-xs font-medium text-brand-charcoal/60">
+          <Bilingual km={statLabel.km} en={statLabel.en} />
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start">
+      {
+        locations.map((loc) => (
+          <span class="rounded-full bg-black px-4 py-1.5 text-sm font-medium text-white">
+            <Bilingual km={loc.km} en={loc.en} enClass="opacity-60" />
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
+      {
+        activityPhotos.map((photo, i) => (
+          <div class:list={[i === 0 && "col-span-2 row-span-2"]}>
+            <GridModule
+              image={photo}
+              imageAlt="Tum Pheang Kuch activity — training seminar with students"
+              size={i === 0 ? "large" : "standard"}
+              aspect={i === 0 ? "auto" : "square"}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

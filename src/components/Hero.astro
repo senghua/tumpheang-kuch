@@ -1,0 +1,75 @@
+---
+import { Image } from "astro:assets";
+import heroBanner from "../assets/hero-banner.jpg";
+import Bilingual from "./Bilingual.astro";
+import Eyebrow from "./Eyebrow.astro";
+import Button from "./Button.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const title = tt("hero.title");
+const subtitle = tt("hero.subtitle");
+const eyebrow = tt("hero.eyebrow");
+const joinUs = tt("hero.joinUs");
+const learnMore = tt("hero.learnMore");
+
+const pills = [
+  tt("hero.pill.education"),
+  tt("hero.pill.motivation"),
+  tt("hero.pill.inspiring"),
+  tt("hero.pill.leadership"),
+];
+---
+
+<section
+  id="hero"
+  class="relative flex min-h-[90vh] items-center overflow-hidden bg-brand-charcoal text-white"
+>
+  <Image
+    src={heroBanner}
+    alt="Tum Pheang Kuch founders on stage with students, monks, and officials at an event"
+    class="absolute inset-0 h-full w-full object-cover"
+    widths={[640, 1024, 1600, 2048]}
+    sizes="100vw"
+    priority
+  />
+  <div class="absolute inset-0 bg-black/55" aria-hidden="true"></div>
+  <div
+    class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.55)_45%,rgba(0,0,0,0.35)_100%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-5xl px-4 py-24 text-center [text-shadow:0_2px_16px_rgba(0,0,0,0.45)] sm:px-6 lg:px-8">
+    <div class="flex justify-center">
+      <Eyebrow km={eyebrow.km} en={eyebrow.en} dark />
+    </div>
+    <h1 class="mt-4 font-khmer text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
+      {title.km}
+    </h1>
+    <p class="mt-1 text-lg font-medium text-white/70 sm:text-xl">{title.en}</p>
+    <p class="mt-4 text-xl font-semibold text-white sm:text-2xl">
+      {subtitle.km}
+    </p>
+    <p class="mt-1 text-sm font-medium text-white/60 sm:text-base">{subtitle.en}</p>
+
+    <ul class="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+      {
+        pills.map((pill) => (
+          <li class="rounded-full border border-white/30 bg-black/30 px-4 py-1.5 text-sm font-medium">
+            <Bilingual km={pill.km} en={pill.en} />
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <Button href="#membership" variant="solid" dark>
+        <Bilingual km={joinUs.km} en={joinUs.en} enClass="opacity-80" />
+      </Button>
+      <Button href="#about" variant="outline" dark>
+        <Bilingual km={learnMore.km} en={learnMore.en} enClass="opacity-80" />
+      </Button>
+    </div>
+  </div>
+</section>

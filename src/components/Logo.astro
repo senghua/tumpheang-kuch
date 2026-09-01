@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.jpg";
+
+interface Props {
+  class?: string;
+  imgClass?: string;
+}
+
+const { class: className = "", imgClass = "h-11 w-11 sm:h-12 sm:w-12" } = Astro.props;
+---
+
+<Image
+  src={logo}
+  alt="ទំពាំងគជ់ — Tum Pheang Kuch, Building Leadership"
+  widths={[64, 96, 128, 192]}
+  sizes="48px"
+  quality={90}
+  class:list={["shrink-0 rounded-lg object-cover", imgClass, className]}
+/>

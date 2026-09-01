@@ -1,0 +1,90 @@
+---
+import vengSereyvuth from "../assets/leadership/veng-sereyvuth.jpg";
+import huongSokEn from "../assets/leadership/huong-sok-en.jpg";
+import thornRivong from "../assets/leadership/thorn-rivong.jpg";
+import Eyebrow from "./Eyebrow.astro";
+import GridModule from "./GridModule.astro";
+import { useBilingual } from "../i18n/utils";
+
+const lang = Astro.currentLocale;
+const tt = useBilingual(lang);
+const title = tt("leadership.title");
+const eyebrow = tt("leadership.eyebrow");
+const credentialsLabel = tt("leadership.credentials");
+const isKm = lang !== "en";
+
+const leaders = [
+  {
+    name: isKm ? "វេង សេរីវុឌ្ឍ" : "Veng Sereyvuth",
+    role: tt("leadership.role1"),
+    photo: vengSereyvuth,
+    bullets: [
+      "Former Senior Minister of Culture and Fine Arts",
+      "Former Minister of Tourism",
+      "Chairman & Board of Director, PUC",
+      'Author of the book "No One Born Poor"',
+    ],
+  },
+  {
+    name: isKm ? "ហួង សុខអិន" : "Huong Sok En",
+    role: tt("leadership.role2"),
+    photo: huongSokEn,
+    bullets: [
+      "MBA in International Business, PUC",
+      "BA in International Relations",
+      "Trainer at OPERACY / HEDC International",
+      "Shareholder, Anlungchrey Village & Resort",
+      "Founder, Tum Pheang Kuch",
+    ],
+  },
+  {
+    name: isKm ? "ថន រីវង្ស" : "Thorn Rivong",
+    role: tt("leadership.role3"),
+    photo: thornRivong,
+    bullets: [
+      "Royal University of Law and Economics (RULE), Banking & Finance",
+      "13 years of experience in Sales & Marketing, private sector",
+      "Founder, Tum Pheang Kuch",
+    ],
+  },
+];
+---
+
+<section id="leadership" class="scroll-mt-20 bg-white py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <div class="flex justify-center">
+        <Eyebrow km={eyebrow.km} en={eyebrow.en} />
+      </div>
+      <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+        {title.km}
+      </h2>
+      <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">{title.en}</p>
+    </div>
+
+    <div class="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        leaders.map((leader) => (
+          <GridModule
+            image={leader.photo}
+            imageAlt={leader.name}
+            title={leader.name}
+            subtitle={leader.role}
+            size="large"
+            aspect="portrait"
+            detailsLabel={credentialsLabel}
+          >
+            <ul class="space-y-2">
+              {leader.bullets.map((bullet) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-charcoal" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </GridModule>
+        ))
+      }
+    </div>
+  </div>
+</section>

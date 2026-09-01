@@ -1,0 +1,13 @@
+---
+interface Props {
+  km: string;
+  en: string;
+  enClass?: string;
+}
+
+const { km, en, enClass = "opacity-55" } = Astro.props;
+---
+
+<span class="font-khmer">{km}</span><span
+  class={`ml-1.5 font-sans text-[0.7em] font-medium tracking-wide uppercase ${enClass}`}
+>{en}</span>

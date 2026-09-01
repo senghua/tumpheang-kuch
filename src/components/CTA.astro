@@ -1,0 +1,40 @@
+---
+// TODO: replace href="#" with real Telegram link once available.
+import Bilingual from "./Bilingual.astro";
+import Button from "./Button.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const title = tt("cta.title");
+const thanks = tt("cta.thanks");
+const facebook = tt("cta.facebook");
+const telegram = tt("cta.telegram");
+---
+
+<section id="contact" class="scroll-mt-20 bg-brand-charcoal py-24 text-white sm:py-32">
+  <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+    <p class="font-khmer text-3xl font-bold tracking-tight sm:text-5xl">
+      {title.km}
+    </p>
+    <p class="mt-3 text-base font-medium text-white/50 sm:text-lg">{title.en}</p>
+
+    <p class="mt-10 font-khmer text-2xl font-bold">
+      <Bilingual km={thanks.km} en={thanks.en} enClass="opacity-70" />
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <Button
+        href="https://www.facebook.com/profile.php?id=61553775306912"
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="solid"
+        dark
+      >
+        <Bilingual km={facebook.km} en={facebook.en} enClass="opacity-70" />
+      </Button>
+      <Button href="#" variant="outline" dark>
+        <Bilingual km={telegram.km} en={telegram.en} enClass="opacity-80" />
+      </Button>
+    </div>
+  </div>
+</section>

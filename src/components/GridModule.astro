@@ -1,0 +1,75 @@
+---
+import { Image } from "astro:assets";
+import Bilingual from "./Bilingual.astro";
+
+interface Props {
+  image: ImageMetadata;
+  imageAlt: string;
+  title?: string;
+  subtitle?: string | { km: string; en: string };
+  size?: "large" | "standard";
+  aspect?: "portrait" | "square" | "auto";
+  grayscale?: boolean;
+  detailsLabel?: { km: string; en: string };
+}
+
+const {
+  image,
+  imageAlt,
+  title,
+  subtitle,
+  size = "standard",
+  aspect = "square",
+  grayscale = false,
+  detailsLabel,
+} = Astro.props;
+
+const hasDetails = Astro.slots.has("default");
+---
+
+<div class:list={["group flex flex-col", aspect === "auto" && "h-full"]}>
+  <div
+    class:list={[
+      "overflow-hidden bg-neutral-100",
+      aspect === "portrait" ? "aspect-[3/4]" : aspect === "square" ? "aspect-square" : "h-full",
+    ]}
+  >
+    <Image
+      src={image}
+      alt={imageAlt}
+      width={640}
+      height={aspect === "portrait" ? 853 : 640}
+      densities={[1, 1.5, 2]}
+      quality={90}
+      class:list={[
+        "h-full w-full object-cover transition-all duration-500",
+        grayscale && "grayscale group-hover:grayscale-0",
+      ]}
+    />
+  </div>
+
+  {
+    title && (
+      <div class="mt-4">
+        <p class:list={["font-khmer font-bold text-brand-charcoal", size === "large" ? "text-xl" : "text-sm"]}>
+          {title}
+        </p>
+        {subtitle && (
+          <p class:list={["text-brand-charcoal/60", size === "large" ? "mt-1 text-sm font-semibold" : "text-xs"]}>
+            {typeof subtitle === "string" ? subtitle : <Bilingual km={subtitle.km} en={subtitle.en} />}
+          </p>
+        )}
+        {hasDetails && detailsLabel && (
+          <details class="mt-3 text-sm text-brand-charcoal/70">
+            <summary class="cursor-pointer list-none font-semibold text-brand-charcoal">
+              <Bilingual km={detailsLabel.km} en={detailsLabel.en} />
+            </summary>
+            <div class="mt-3">
+              <slot />
+            </div>
+          </details>
+        )}
+      </div>
+    )
+  }
+</div>

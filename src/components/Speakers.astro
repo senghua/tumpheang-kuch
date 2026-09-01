@@ -1,0 +1,74 @@
+---
+import Eyebrow from "./Eyebrow.astro";
+import GridModule from "./GridModule.astro";
+import { useBilingual } from "../i18n/utils";
+
+const lang = Astro.currentLocale;
+const tt = useBilingual(lang);
+const title = tt("speakers.title");
+const description = tt("speakers.description");
+const eyebrow = tt("speakers.eyebrow");
+const isKm = lang !== "en";
+
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/speakers/*.{jpg,jpeg,png,webp}",
+  { eager: true }
+);
+
+const khmerNames: Record<string, string> = {
+  "Samdech Preah Maha Ariyavong Ph.D. Yen Seng Yeat": "សម្តេច ព្រះមហាអរិយវង្ស បណ្ឌិត យ៉េន សេងយៀត",
+  "Preah Bhikkhu Vajirapanyo Ph.D. Kou Sopheap": "ព្រះភិក្ខុ វជិរប្បញ្ញោ បណ្ឌិត គូ សុភាព",
+  "H.E. Veng Sereyvuth": "ឯកឧត្តម វ៉េង សិរីវុឌ្ឍ",
+  "Mrs. Khuong Frandara": "លោកស្រី ឃួង ហ្វ្រង់ដារ៉ា",
+  "Neak Oknha Dr. Quach Mengly": "អ្នកឧកញ៉ា វេជ្ជបណ្ឌិត គួច ម៉េងលី",
+  "Oknha Pech Bolene": "ឧកញ៉ា ប៊ិច បូឡែន",
+  "Lok Kru Sam Kosal": "លោកគ្រូ សំ កុសល",
+  "Mr. Bin Phat": "លោក ប៊ិន ផាត",
+  "Mrs. Noot Kdat": "លោកស្រី នុត ក្ដាត",
+  "Mrs. Pen Bopha": "លោកស្រី ប៉ែន បុប្ផា",
+};
+
+const speakers = Object.entries(modules)
+  .map(([path, mod]) => {
+    const filename = path.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "";
+    const [order, ...rest] = filename.split("-");
+    const en = rest.join("-").trim();
+    const name = isKm ? (khmerNames[en] ?? en) : en;
+    return { order: Number(order), name, photo: mod.default };
+  })
+  .sort((a, b) => a.order - b.order);
+---
+
+<section id="speakers" class="scroll-mt-20 bg-white py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <div class="flex justify-center">
+        <Eyebrow km={eyebrow.km} en={eyebrow.en} />
+      </div>
+      <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+        {title.km}
+      </h2>
+      <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">{title.en}</p>
+      <p class="mt-5 text-sm leading-relaxed text-brand-charcoal/70">
+        {description.km}
+      </p>
+      <p class="mt-2 text-sm leading-relaxed text-brand-charcoal/45">
+        {description.en}
+      </p>
+    </div>
+
+    <div class="mt-14 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+      {
+        speakers.map((speaker) => (
+          <GridModule
+            image={speaker.photo}
+            imageAlt={speaker.name}
+            title={speaker.name}
+            size="standard"
+            aspect="square"
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import Bilingual from "./Bilingual.astro";
+
+interface Props {
+  km: string;
+  en: string;
+  dark?: boolean;
+  class?: string;
+}
+
+const { km, en, dark = false, class: className = "" } = Astro.props;
+---
+
+<p
+  class:list={[
+    "flex items-center gap-2 font-khmer text-sm font-semibold tracking-widest uppercase",
+    dark ? "text-white" : "text-brand-charcoal",
+    className,
+  ]}
+>
+  <span class="h-px w-6 shrink-0 bg-brand-red" aria-hidden="true"></span>
+  <Bilingual km={km} en={en} enClass={dark ? "opacity-60" : "opacity-55"} />
+</p>

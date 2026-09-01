@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import Bilingual from "./Bilingual.astro";
+import Eyebrow from "./Eyebrow.astro";
+import { useBilingual } from "../i18n/utils";
+import numLogo from "../assets/partners/partners1.jpg";
+import citLogo from "../assets/partners/partners2.jpg";
+import pseLogo from "../assets/partners/partners3.jpg";
+import writingTheFutureLogo from "../assets/media-partners/media-partners4.jpg";
+import pannasastraLogo from "../assets/media-partners/media-partners1.jpg";
+import amsLogo from "../assets/media-partners/media-partners3.jpg";
+import bookeyondLogo from "../assets/media-partners/media-partners2.jpg";
+import bookCover from "../assets/media-partners/book-no-one-born-poor.png";
+
+const tt = useBilingual(Astro.currentLocale);
+const title = tt("partners.title");
+const bookAffiliation = tt("partners.bookAffiliation");
+const eyebrow = tt("partners.eyebrow");
+const partnersLabel = tt("partners.partnersLabel");
+const mediaLabel = tt("partners.mediaLabel");
+
+const partners = [
+  { name: "Student Association of the National University of Management", logo: numLogo },
+  { name: "Student Association of the Cambodian Institute of Technology", logo: citLogo },
+  { name: "PSE (Pour un Sourire d'Enfant)", logo: pseLogo },
+];
+
+const media = [
+  { name: '"Writing The Future" media group', logo: writingTheFutureLogo },
+  { name: "Pannasastra University", logo: pannasastraLogo },
+  { name: "AMS", logo: amsLogo },
+  { name: "Bookeyond", logo: bookeyondLogo },
+];
+---
+
+<section id="partners" class="scroll-mt-20 bg-neutral-50 py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <div class="flex justify-center">
+        <Eyebrow km={eyebrow.km} en={eyebrow.en} />
+      </div>
+      <h2 class="mt-3 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+        {title.km}
+      </h2>
+      <p class="mt-2 text-sm font-medium text-brand-charcoal/50 sm:text-base">{title.en}</p>
+    </div>
+
+    <div class="mt-14">
+      <p class="text-center text-sm font-semibold text-brand-charcoal/60">
+        <Bilingual km={partnersLabel.km} en={partnersLabel.en} />
+      </p>
+      <div class="mt-6 grid gap-8 sm:grid-cols-3">
+        {
+          partners.map((partner) => (
+            <div class="flex min-h-32 flex-col items-center justify-center gap-3 border-t border-black/10 pt-6 text-center">
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={72}
+                height={72}
+                fit="contain"
+                quality={90}
+                class="h-16 w-16 object-contain grayscale"
+              />
+              <p class="text-xs font-medium text-brand-charcoal/70">{partner.name}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <p class="text-center text-sm font-semibold text-brand-charcoal/60">
+        <Bilingual km={mediaLabel.km} en={mediaLabel.en} />
+      </p>
+      <div class="mt-6 grid gap-8 sm:grid-cols-4">
+        {
+          media.map((m) => (
+            <div class="flex min-h-28 flex-col items-center justify-center gap-2 border-t border-black/10 pt-6 text-center">
+              <Image src={m.logo} alt={m.name} width={64} height={64} quality={90} class="h-12 w-12 object-contain grayscale" />
+              <p class="text-xs font-medium text-brand-charcoal/70">{m.name}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mx-auto mt-10 flex max-w-xl items-center gap-6 bg-brand-charcoal p-6 text-white">
+      <Image
+        src={bookCover}
+        alt='"No One Born Poor" book cover by Oknha Veng Sereyvuth'
+        width={80}
+        height={120}
+        densities={[1, 2]}
+        quality={90}
+        class="h-24 w-auto shrink-0"
+      />
+      <div>
+        <p class="text-sm text-white/80">
+          {bookAffiliation.km} <span class="font-semibold text-white">"No One Born Poor"</span>
+        </p>
+        <p class="mt-1 text-xs text-white/40">{bookAffiliation.en}</p>
+      </div>
+    </div>
+  </div>
+</section>

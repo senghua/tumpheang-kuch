@@ -1,0 +1,76 @@
+---
+import Bilingual from "./Bilingual.astro";
+import Eyebrow from "./Eyebrow.astro";
+import { useBilingual } from "../i18n/utils";
+
+const tt = useBilingual(Astro.currentLocale);
+const visionTitle = tt("vision.title");
+const visionDescription = tt("vision.description");
+const visionEyebrow = tt("vision.eyebrow");
+const missionEyebrow = tt("mission.eyebrow");
+const coValueEyebrow = tt("coValue.eyebrow");
+
+const missionStats = [
+  { value: "10,000", km: "យុវជនទំពាំងគជ់ក្នុងរយៈពេល១០ឆ្នាំ", en: "Tum Pheang Kuch youth within 10 years" },
+  { value: "1,000", km: "ឱកាសការងារជូនយុវជនក្នុងមួយឆ្នាំ", en: "job opportunities for youth per year" },
+  { value: "1,000", km: "អ្នកដឹកនាំវ័យក្មេងក្នុងមួយឆ្នាំ", en: "young leaders developed per year" },
+];
+
+const coValueKeys = ["coValue.item1", "coValue.item2", "coValue.item3", "coValue.item4", "coValue.item5"] as const;
+const coValues = coValueKeys.map((key) => tt(key));
+---
+
+<section id="vision" class="scroll-mt-20 bg-neutral-50 py-24 sm:py-32">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
+      <div>
+        <Eyebrow km={visionEyebrow.km} en={visionEyebrow.en} />
+        <h2 class="mt-4 font-khmer text-3xl font-bold tracking-tight text-brand-charcoal sm:text-4xl">
+          {visionTitle.km}
+        </h2>
+        <p class="mt-2 text-sm font-medium text-brand-charcoal/45">
+          {visionTitle.en}
+        </p>
+        <p class="mt-8 max-w-md text-base leading-relaxed text-brand-charcoal/80">
+          {visionDescription.km}
+        </p>
+        <p class="mt-3 max-w-md text-sm leading-relaxed text-brand-charcoal/45">
+          {visionDescription.en}
+        </p>
+      </div>
+
+      <div>
+        <Eyebrow km={missionEyebrow.km} en={missionEyebrow.en} />
+        <div class="mt-8 space-y-8">
+          {
+            missionStats.map((stat) => (
+              <div>
+                <p class="font-khmer text-4xl font-extrabold tracking-tight text-brand-charcoal sm:text-5xl">
+                  {stat.value}
+                </p>
+                <p class="mt-2 font-khmer text-sm font-medium text-brand-charcoal">{stat.km}</p>
+                <p class="mt-0.5 text-xs text-brand-charcoal/45">{stat.en}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-28">
+      <Eyebrow km={coValueEyebrow.km} en={coValueEyebrow.en} />
+      <ul class="mx-auto mt-8 grid max-w-4xl gap-x-12 gap-y-6 sm:grid-cols-2">
+        {
+          coValues.map((value) => (
+            <li class="flex items-start gap-3 text-sm leading-relaxed text-brand-charcoal/70">
+              <span class="mt-0.5 shrink-0 font-bold text-brand-charcoal">—</span>
+              <span>
+                <Bilingual km={value.km} en={value.en} />
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

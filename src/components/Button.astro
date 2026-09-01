@@ -1,0 +1,34 @@
+---
+interface Props {
+  href: string;
+  variant?: "solid" | "outline";
+  dark?: boolean;
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+
+const { href, variant = "solid", dark = false, class: className = "", target, rel } = Astro.props;
+
+const styles = {
+  "light-solid": "border border-brand-charcoal bg-brand-charcoal text-white hover:bg-white hover:text-brand-charcoal",
+  "light-outline": "border border-brand-charcoal bg-transparent text-brand-charcoal hover:bg-brand-charcoal hover:text-white",
+  "dark-solid": "border border-white bg-white text-brand-charcoal hover:bg-brand-charcoal hover:text-white",
+  "dark-outline": "border border-white bg-transparent text-white hover:bg-white hover:text-brand-charcoal",
+} as const;
+
+const key = `${dark ? "dark" : "light"}-${variant}` as keyof typeof styles;
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class:list={[
+    "inline-block px-8 py-3 text-center font-semibold transition-colors",
+    styles[key],
+    className,
+  ]}
+>
+  <slot />
+</a>
