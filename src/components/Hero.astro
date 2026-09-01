@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import heroBanner from "../assets/hero-banner.jpg";
 import Bilingual from "./Bilingual.astro";
-import Eyebrow from "./Eyebrow.astro";
 import Button from "./Button.astro";
 import { useBilingual } from "../i18n/utils";
 
@@ -12,64 +11,47 @@ const subtitle = tt("hero.subtitle");
 const eyebrow = tt("hero.eyebrow");
 const joinUs = tt("hero.joinUs");
 const learnMore = tt("hero.learnMore");
-
-const pills = [
-  tt("hero.pill.education"),
-  tt("hero.pill.motivation"),
-  tt("hero.pill.inspiring"),
-  tt("hero.pill.leadership"),
-];
 ---
 
-<section
-  id="hero"
-  class="relative flex min-h-[90vh] items-center overflow-hidden bg-brand-charcoal text-white"
->
-  <Image
-    src={heroBanner}
-    alt="Tum Pheang Kuch founders on stage with students, monks, and officials at an event"
-    class="hero-ken-burns absolute inset-0 h-full w-full object-cover"
-    widths={[640, 1024, 1600, 2048]}
-    sizes="100vw"
-    priority
-  />
-  <div class="absolute inset-0 bg-black/55" aria-hidden="true"></div>
-  <div
-    class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.55)_45%,rgba(0,0,0,0.35)_100%)]"
-    aria-hidden="true"
-  >
-  </div>
+<section id="hero" class="bg-white pt-6 pb-10 sm:pt-8 sm:pb-14 lg:pt-10 lg:pb-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative aspect-[3/4] w-full overflow-hidden bg-brand-charcoal text-white sm:aspect-[3/2] lg:aspect-[2/1]">
+      <Image
+        src={heroBanner}
+        alt="Tum Pheang Kuch founders on stage with students, monks, and officials at an event"
+        class="hero-ken-burns absolute inset-0 h-full w-full object-cover"
+        widths={[640, 1024, 1600, 2048]}
+        sizes="100vw"
+        priority
+      />
+      <div
+        class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.25)_45%,rgba(0,0,0,0)_100%)]"
+        aria-hidden="true"
+      >
+      </div>
 
-  <div class="relative mx-auto max-w-5xl px-4 py-24 text-center [text-shadow:0_2px_16px_rgba(0,0,0,0.45)] sm:px-6 lg:px-8">
-    <div class="animate-fade-up flex justify-center">
-      <Eyebrow km={eyebrow.km} en={eyebrow.en} dark />
-    </div>
-    <h1 class="animate-fade-up mt-4 font-khmer text-5xl leading-snug font-bold tracking-tight [animation-delay:120ms] sm:text-6xl md:text-7xl">
-      {title.km}
-    </h1>
-    <p class="animate-fade-up mt-1 text-lg font-medium text-white/80 [animation-delay:220ms] sm:text-xl">{title.en}</p>
-    <p class="animate-fade-up mt-4 text-xl font-semibold text-white [animation-delay:300ms] sm:text-2xl">
-      {subtitle.km}
-    </p>
-    <p class="animate-fade-up mt-1 text-sm font-medium text-white/55 [animation-delay:380ms] sm:text-base">{subtitle.en}</p>
+      <div class="absolute inset-x-0 bottom-0 p-5 text-left [text-shadow:0_2px_16px_rgba(0,0,0,0.45)] sm:p-8 lg:p-10">
+        <div class="max-w-2xl">
+          <h1 class="animate-fade-up font-khmer text-2xl leading-snug font-bold tracking-tight sm:text-3xl lg:text-4xl">
+            {title.km}
+          </h1>
+          <p class="animate-fade-up mt-2 font-khmer text-sm font-semibold text-white [animation-delay:120ms] sm:text-base lg:text-lg">
+            {eyebrow.km} • {subtitle.km}
+          </p>
+          <p class="animate-fade-up mt-1 text-xs font-medium text-white/70 [animation-delay:220ms] sm:text-sm">
+            {title.en} - {eyebrow.en} • {subtitle.en}
+          </p>
 
-    <ul class="animate-fade-up mt-8 flex flex-wrap items-center justify-center gap-2 [animation-delay:460ms] sm:gap-3">
-      {
-        pills.map((pill) => (
-          <li class="rounded-full border border-white/30 bg-black/30 px-4 py-1.5 text-sm font-medium transition-colors hover:bg-white/10">
-            <Bilingual km={pill.km} en={pill.en} />
-          </li>
-        ))
-      }
-    </ul>
-
-    <div class="animate-fade-up mt-10 flex flex-wrap items-center justify-center gap-4 [animation-delay:540ms]">
-      <Button href="#membership" variant="solid" dark>
-        <Bilingual km={joinUs.km} en={joinUs.en} enClass="opacity-80" />
-      </Button>
-      <Button href="#about" variant="outline" dark>
-        <Bilingual km={learnMore.km} en={learnMore.en} enClass="opacity-80" />
-      </Button>
+          <div class="animate-fade-up mt-4 flex flex-wrap items-center gap-3 [animation-delay:320ms] sm:mt-6">
+            <Button href="#membership" variant="solid" dark>
+              <Bilingual km={joinUs.km} en={joinUs.en} enClass="opacity-80" />
+            </Button>
+            <Button href="#about" variant="outline" dark>
+              <Bilingual km={learnMore.km} en={learnMore.en} enClass="opacity-80" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
